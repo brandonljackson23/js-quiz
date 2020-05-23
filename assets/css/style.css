@@ -1,3 +1,8 @@
+
+:root {
+    --primary-color: #3C3C96;
+}
+
 * {
     font-family: Helvetica, Arial, sans-serif;
     box-sizing: border-box;
@@ -18,7 +23,7 @@ header h3 {
 
 header a {
     text-decoration: none;
-    color: blue;
+    color: var(--primary-color);
 }
 
 body {
@@ -45,9 +50,13 @@ main {
     display: inline-block;
     margin: 10px 0;
     padding: 10px 15px;
-    background: blue;
+    background: var(--primary-color);
     color: white;
     font-size: 20px;
     border-radius: 7px;
     position: relative;
+}
+
+.btn:hover {
+    opacity: 70%;
 }
