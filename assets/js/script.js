@@ -36,8 +36,17 @@ question.prototype.isCorrectAnswer = function(choice) {
 var startQuiz = function() {
     if(quiz.isEnded()) {
         showResults();
-    }
-    else {
+    } else {
+        // start timer
+        var timeleft = 30;
+        var countdownTimer = setInterval(function(){
+        timeleft--;
+        document.getElementById("timer").textContent = timeleft;
+            if(timeleft <= 0) {
+                clearInterval(countdownTimer);
+                showResults()
+            };
+        },1000);
         // show question
         var element = document.getElementById("question");
         element.innerHTML = quiz.getQuestionNum().text;
@@ -92,7 +101,17 @@ var questions = [
     new question("String values must be enclosed within _______ when being assigned to variables.", ["A. commas", "B. curly brackets", "C. quotes", "D. parenthesis"], "C. quotes"),
     new question("A very useful tool used during development and debugging for printing content to the debugger is:", ["A. JavaScript", "B. terminal/bash", "C. for loops", "D. console.log"], "D. console.log")
 ];
+//var showHome = function() {
+//    var quizStart = "<h1>JavaScript Quiz Challenge</h1>";
+//    quizStart += "<p>Try to answer the following code-related questions within the time limit.  Keep in mind that incorrect answers will penalize your score and subtract 10 seconds from your remaining time.</p>";
+//    quizResults += "<div><<button id='btn5' type='submit'>Start Quiz</button></div>";
+//    var element = document.getElementById("quiz");
+//    element.innerHTML = quizStart;
+//    var begin = document.getElementById("btn5");
+//    begin.onclick = function() {
+//       startQuiz();  
+//};
 // create the quiz
 var quiz = new quiz(questions);
-// display the quiz
+// display the home page
 startQuiz();
