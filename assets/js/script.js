@@ -1,80 +1,98 @@
-startPage = function() {
-    // declare variables
-    var quizTitleEl = document.createElement("h1");
-    var quizInstructionsEl = document.createElement("h2");
-    var startBtnEl = document.createElement("button");
-    // create page content
-    quizTitleEl.textContent = "Coding Quiz Challenge";
-    quizInstructionsEl.textContent = "Try to answer the following code-related questions withing the time limit. Keep in mind that incorrect answers will penalize your score and reduce your time by ten seconds.";
-    startBtnEl.className = "btn";
-    startBtnEl.id = "startQuiz";
-    startBtnEl.type = "submit";
-    startBtnEl.textContent = "Start Quiz";
-    // append content to page
-    div1.appendChild(quizTitleEl);
-    div2.appendChild(quizInstructionsEl);
-    div3.appendChild(startBtnEl);
-    // add event listener to button
-    var startQuizEl = document.querySelector("#startQuiz");
-    startQuizEl.addEventListener("click", q1Page);
+// track score and question number
+var quiz = function(questions) {
+    this.score = 0;
+    this.questions = questions;
+    this.questionNum = 0;
+}
+// record the current question number
+quiz.prototype.getQuestionNum = function() {
+    return this.questions[this.questionNum];
+}
+// check if user selcted the correct answer
+quiz.prototype.guess = function(answer) {
+    if (this.getQuestionNum().isCorrectAnswer(answer)) {
+        this.score++;
+        showCorrect();
+    } else {
+        showWrong();
+    }
+    this.questionNum++;
+}
+// check if end of quiz has been reached
+quiz.prototype.isEnded = function() {
+    return this.questionNum === this.questions.length;
+}
+// track user's answers
+var question = function(text, choices, answer) {
+    this.text = text;
+    this.choices = choices;
+    this.answer = answer;
+}
+// record user's answer
+question.prototype.isCorrectAnswer = function(choice) {
+    return this.answer === choice;
+}
+// function for running the quiz
+var startQuiz = function() {
+    if(quiz.isEnded()) {
+        showResults();
+    }
+    else {
+        // show question
+        var element = document.getElementById("question");
+        element.innerHTML = quiz.getQuestionNum().text;
+        // show options
+        var choices = quiz.getQuestionNum().choices;
+        // loop through all questions
+        for(var i = 0; i < choices.length; i++) {
+            var element = document.getElementById("choice" + i);
+            element.innerHTML = choices[i];
+            guess("btn" + i, choices[i]);
+        }
+        showProgress();
+    }
 };
-q1Page = function() {
-    // declare variables
-    var quizTitleEl = document.querySelector("h1");
-    var quizInstructionsEl = document.querySelector("h2");
-    var startBtnEl = document.querySelector("button");
-    var qEl = document.createElement("h1");
-    var liEl = document.querySelector("li");
-    var a1El = document.createElement("li");
-    var a2El = document.createElement("li");
-    var a3El = document.createElement("li");
-    var a4El = document.createElement("li");
-    // remove previous content
-    quizTitleEl.parentElement.removeChild(quizTitleEl);
-    quizInstructionsEl.parentElement.removeChild(quizInstructionsEl);
-    startBtnEl.parentElement.removeChild(startBtnEl);
-    // create page content
-    qEl.textContent = "What is your name?";
-    // answer option a
-    a1El.className = "btn";
-    a1El.id = "a";
-    a1El.type ="submit";
-    a1El.textContent = "Matt";
-    // answer option b
-    a2El.className = "btn";
-    a2El.id = "b";
-    a2El.type ="submit";
-    a2El.textContent = "Mark";
-    // answer option c
-    a3El.className = "btn";
-    a3El.id = "c";
-    a3El.type ="submit";
-    a3El.textContent = "Luke";
-    // answer option d
-    a4El.className = "btn";
-    a4El.id = "d";
-    a4El.type ="submit";
-    a4El.textContent = "John";
-    // append content to page
-    div1.appendChild(qEl);
-    liEl.appendChild(a1El);
-    liEl.appendChild(a2El);
-    liEl.appendChild(a3El);
-    liEl.appendChild(a4El);
-    // event listeners for answers
-    var aBtn1El = document.querySelector("#a");
-    aBtn1El.addEventListener("click", q2Page);
+// track which option the user chose
+var guess = function(id, guess) {
+    var button = document.getElementById(id);
+    button.onclick = function() {
+        quiz.guess(guess);
+        startQuiz();
+    }
 };
-q2Page = function() {
-    var qEl = document.querySelector("h1");
-    var a1El = document.querySelector("li");
-    var a2El = document.querySelector("li");
-    var a3El = document.querySelector("li");
-    var a4El = document.querySelector("li");
-    qEl.textContent = "How old are you?";
-    a1El.textContent = "< 20";
-    a2El.textContent = "21-40";
-    a3El.textContent = "41-60";
-    a4El.textContent = "> 60";
+// display correct in footer
+var showCorrect = function() {
+    var element = document.getElementById("correct");
+    element.innerHTML = "<font color='green'>Correct!</font>";
+}
+// display wrong in footer
+var showWrong = function() {
+    var element = document.getElementById("correct");
+    element.innerHTML = "<font color='red'>Wrong!</font>";
+}
+// display quiz progress in footer
+var showProgress = function() {
+    var currentQuestionNumber = quiz.questionNum + 1;
+    var element = document.getElementById("progress");
+    element.innerHTML = "Question " + currentQuestionNumber + " of " + quiz.questions.length;
 };
-startPage();
+// display quiz results and record intials for high score
+var showResults = function() {
+    var quizResults = "<h1>All done!</h1>";
+    quizResults += "<p id='score'> Your final score is " + quiz.score + ".</p>";
+    quizResults += "<div><form><label> Enter initials: </label><input type='text'id='initials'><button id='btn4' type='submit'>Submit</button></form></div>";
+    var element = document.getElementById("quiz");
+    element.innerHTML = quizResults;
+};
+// array of questions and answers
+var questions = [
+    new question("Commonly used data types do NOT include:", ["A. strings", "B. alerts","C. CSS", "D. numbers"], "B. alerts"),
+    new question("The condition in an if/else statement is enclosed with _______.", ["A. quotes", "B. curly brackets", "C. parenthesis", "D. square brackets"], "B. curly brackets"),
+    new question("Arrays in JavaScript can be used to store _______.", ["A. numbers and strings", "B. other arrays", "C. booleans", "D. all of the above"], "D. all of the above"),
+    new question("String values must be enclosed within _______ when being assigned to variables.", ["A. commas", "B. curly brackets", "C. quotes", "D. parenthesis"], "C. quotes"),
+    new question("A very useful tool used during development and debugging for printing content to the debugger is:", ["A. JavaScript", "B. terminal/bash", "C. for loops", "D. console.log"], "D. console.log")
+];
+// create the quiz
+var quiz = new quiz(questions);
+// display the quiz
+startQuiz();
