@@ -49,10 +49,13 @@ input {
     font-weight: bold;
     color: black;
 }
+#quiz-title, #quiz-instructions {
+    color: var(--primary-color);
+}
 .buttons {
     margin-top: 30px;
 }
-#btn0, #btn1, #btn2, #btn3, #btn4 {
+#btn0, #btn1, #btn2, #btn3, #btn4, #btn5, #btn6 {
     background-color: var(--primary-color);
     width: 250px;
     font-size: 20px;
@@ -64,15 +67,16 @@ input {
     text-align: left;
     display: flex;
 }
-#btn4 {
+#btn4, #btn5, #btn6 {
     width: auto;
     height: auto;
+    font-size: 15px;
 }
-#btn0:hover, #btn1:hover, #btn2:hover, #btn3:hover, #btn4:hover {
+#btn0:hover, #btn1:hover, #btn2:hover, #btn3:hover, #btn4:hover, #btn5:hover, #btn6:hover {
     cursor: pointer;
     opacity: 70%;
 }
-#btn0:focus, #btn1:focus, #btn2:focus, #btn3:focus, #btn4:focus {
+#btn0:focus, #btn1:focus, #btn2:focus, #btn3:focus, #btn4:focus, #btn5:focus, #btn6:focus {
     outline: 0;
 }
 footer {
@@ -80,4 +84,11 @@ footer {
     font-size: 18px;
     display: flex;
     justify-content: space-between;
+}
+.high-score {
+    color: black;
+    padding: 15px;
+    border: none;
+    background: grey;
+    margin: 10px;
 }
