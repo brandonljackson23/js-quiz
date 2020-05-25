@@ -89,7 +89,7 @@ var showProgress = function() {
 var showResults = function() {
     var quizResults = "<h1>All done!</h1>";
     quizResults += "<p id='score'> Your final score is " + quiz.score + ".</p>";
-    quizResults += "<div><form id='form'><label> Enter initials: </label><input type='text'id='initials'><a id='store-score' href='./high-scores.html'>Submit</a></form></div>";
+    quizResults += "<div><form id='form'><label> Enter initials: </label><input type='text' id='initials' maxlength='2'><a id='store-score' href='./high-scores.html'>Submit</a></form></div>";
     var element = document.getElementById("quiz");
     element.innerHTML = quizResults;
     //store score to local storage

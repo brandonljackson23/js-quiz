@@ -33,10 +33,12 @@ h2 {
     background-color: #fff;
     padding: 10px 50px 50px 50px;
 }
-#score {
+li {
     color: black;
+    background: rgb(224, 224, 224);
     text-align: left;
     font-size: 30px;
+    list-style: none;
 }
 label {
     font-size: 30px;
@@ -71,6 +73,9 @@ input {
     width: auto;
     height: auto;
     font-size: 15px;
+}
+#btn5, #btn6 {
+    display: inline;
 }
 #btn0:hover, #btn1:hover, #btn2:hover, #btn3:hover, #btn4:hover, #btn5:hover, #btn6:hover {
     cursor: pointer;

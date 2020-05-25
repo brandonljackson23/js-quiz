@@ -1,30 +1,21 @@
-var showHighScores = function() {
-  var highScores = localStorage.getItem("score");
-
-  if(!highScores) {
-      return false;
-  }
-  highScores = JSON.parse(highScores);
-  for (var i = 0; i < highScores.length; i++) {
-      createHighScoreEl(highScores[i]);
-  }
-};
-
-var createHighScoreEl = function() {
+var createItemEl = function() {
+    var ul = document.querySelector('ul');
     var listItemEl = document.createElement("li");
-    listItemEl.className = "high-score";
-    var scoreInfoEl = document.createElement("div");
-    scoreInfoEl.innerHTML = "<h3>" + localStorage('score' [0]) + " - " + localStorage('score' [1]);
-    listItemEl.appendChild(ul);
+    listItemEl.textContent = "1. " + scoresArray[0] + " - " + scoresArray[1];
+    ul.appendChild(listItemEl);
 }
 
-const ul = document.querySelector('ul')
-var clearStorage = document.querySelector("btn6");
-clearStorage.addEventListener('click', function() {
-    localStorage.clear()
-    while (ul.firstChild) {
-        ul.removeChild(ul.firstChild)
-    }
-})
+var scoresArray = [];
+var initials = localStorage.getItem("score")[2] + localStorage.getItem("score")[3]
+scoresArray.push(initials);
+var scores = localStorage.getItem("score")[6]
+scoresArray.push(scores);
 
-showHighScores;
+var clearStorage = document.getElementById("btn6")
+    clearStorage.onclick = function() {
+        localStorage.clear()
+        location.reload();
+        return false;
+}
+
+createItemEl();
